@@ -1,0 +1,32 @@
+<h3>Fibonacci Series</h3>
+<div class="container">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-xs-2">
+          <label for="input-n">Enter Number:</label><br>
+    
+           <input  type="number" placeholder="Enter Number:" aria-label="default input example"
+             id="input-n" type="number" [(ngModel)]="n">
+        <div><br>
+          <button class="btn btn-primary" (click)="generateSeries()">Generate series</button><br>
+        </div><br>
+         <div *ngIf="!isInputValid" class="alert alert-danger">
+           Number is invalid.
+         </div>
+    <table border="1px solid black" class="table table-striped">
+      <thead>
+        <tr>
+          <th>Index</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let number of series; let i = index">
+          <td>{{i}}</td>
+          <td>{{number}}</td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    </div>
+  </div>
+  
