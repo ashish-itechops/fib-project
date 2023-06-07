@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    stages {
+        stage("Build") {
+            steps {
+                echo "Build start........."
+                powershell '''
+              
+                docker build -t fib-project:0.1 .
+                '''
+            }
+            post {
+                success {
+                    slackSend channel: 'test', color: 'good', message: 'Build Completed'
+                }
+                failure {
+                    slackSend channel: 'test', color: 'danger', message: 'Build Failed. Please check.'
+                }
+            }
+        }
+
+        stage("Deploy") {
+            steps {
+                echo "Deployment start........."
+                powershell '''
+                docker run -d -p 8808:80 --name project1 fib-project:0.1
+                '''
+            }
+            post {
+                success {
+                    slackSend channel: 'test', color: 'good', message: 'Deployment Completed'
+                }
+                failure {
+                    slackSend channel: 'test', color: 'danger', message: 'Deployment Failed. Please check.'
+                }
+            }
+        }
+    }
+}
